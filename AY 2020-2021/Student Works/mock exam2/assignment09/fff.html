@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Collect</title>
+
+	<script type="text/javascript">
+		
+		//global vars
+		var sum = 0
+
+		function MoveRight(){
+         
+         var numberArray =[]
+         console.log(numberArray)
+         var thingONleft = document.getElementById('left') 
+		 var thingONright = document.getElementById('right')
+		 
+		 if(thingONleft.selectedIndex >= 0){
+		 	console.log(thingONleft.selectedIndex)
+		 	var get_text=thingONleft[thingONleft.selectedIndex].text        
+		 	console.log(get_text)
+		    
+		    var optionThingLeft = thingONleft[thingONleft.selectedIndex]
+
+		    var optionThingRight = thingONright[thingONleft.selectedIndex]
+		    optionThingRight.text = get_text
+		    
+		    numberArray.push(get_text)
+		      
+		    console.log(numberArray) 
+            compute_numbers(numberArray)
+		    optionThingLeft.text = "" 
+		    console.log(optionThingRight)
+		 } 
+            fortheWin()
+
+		}
+
+
+		function MoveLeft(){
+         
+         var thingONleft = document.getElementById('left') 
+		 var thingONright = document.getElementById('right')
+		 
+		 if(thingONright.selectedIndex >= 0){
+		 	console.log(thingONright.selectedIndex)
+		 	var get_text=thingONright[thingONright.selectedIndex].text        
+		 	console.log(get_text)
+		    
+		    var optionThingRight = thingONright[thingONright.selectedIndex]
+
+		    var optionThingLeft = thingONleft[thingONright.selectedIndex]
+		    optionThingLeft.text = get_text
+		    optionThingRight.text = "" 
+		    console.log(optionThingLeft)
+		  
+		  	
+		 }
+
+
+		}
+		function compute_numbers(thisNumber){
+            
+            var zbir = document.getElementById('forsum')	
+            thisNumber= parseInt(thisNumber)
+        	sum +=thisNumber
+
+        	console.log(sum)
+            
+            zbir.innerHTML=sum
+
+		}
+		function fortheWin(){
+
+		 	var IsWin = document.getElementById('forsum')	
+		    console.log(IsWin.innerHTML)
+            if ( IsWin.innerHTML == 42 )
+
+            	window.alert('you won')
+
+
+		}
+
+	</script>
+
+
+
+</head>
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<div style="border: 1px solid black; width:250px; height: 250px; ">
+						<select size=10 style="width: 100%" id="left">
+							<option>12</option>
+							<option>13</option>
+							<option>55</option>
+							<option>23</option>
+							<option>9</option>
+							<option>45</option>
+							<option>32</option>
+							<option>4</option>
+							<option>1</option>
+							<option>89</option>
+							<option>1</option>
+							<option>78</option>
+						</select>
+					</div>
+				</td>
+				<p> SUM= <p id="forsum"></p></p>
+				<td>
+					<div style="border: 1px solid black; width:50px; height: 50px; font-size: 20px; text-align: center; " onclick="MoveRight()">=></div>
+				</td>
+				<td>
+					<div style="border: 1px solid black; width:50px; height: 50px; font-size:20px; text-align: center " onclick="MoveLeft()"><=</div>
+				</td>
+			   <td>
+					<div style="border: 1px solid black; width:250px; height: 250px; ">
+						<select size=10 style="width: 100%" id="right">
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+						</select>
+					</div>
+				</td>
+			
+				<td>
+					<div style="border: 1px solid black; width:50px; height: 50px; font-size: 20px; text-align: center; " onclick="MoveRight()">=></div>
+				</td>
+				<td>
+					<div style="border: 1px solid black; width:50px; height: 50px; font-size:20px; text-align: center " onclick="MoveLeft()"><=</div>
+				</td>
+			   <td>
+					<div style="border: 1px solid black; width:250px; height: 250px; ">
+						<select size=10 style="width: 100%" id="right">
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+							<option></option>
+						</select>
+					</div>
+				</td>
+			
+			
+
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DragAndDrop</title>
+</head>
+<body>
+
+<!--
+<div id="box1" class="box"></div>
+<div id="box2" class="box"></div>
+<div id="box3" class="box"></div>
+<div id="box4" class="box"></div>
+<div id="box5" class="box"></div>
+<div id="box6" class="box"></div>
+<div id="box7" class="box"></div>
+<div id="box8" class="box"></div>
+<div id="box9" class="box"></div>
+
+<div id="boxx" class="box"></div>
+
+<button onclick="arrayShuffle()">New Game</button>
+-->
+
+<style>
+.box{
+	
+	border:1px solid red;
+    width:100px;
+    height:100px;
+    display:inline;
+    margin:10px;
+   
+}	
+
+</style>
+
+<script>
+var boxes	
+var BoxArray=[] 
+var setNumbers=[]
+var numberArray=[1,2,3,4,5,6,7,8,9]
+//shuffle array of numbers
+ function arrayShuffle(){
+ 
+ let len=numberArray.length
+
+   for (let i = len - 1; i > 0; i--) {
+                   
+
+            const newpos = Math.floor(Math.random() * (i + 1))
+            const temp = numberArray[i]
+            numberArray[i] = numberArray[newpos]
+            numberArray[newpos] = temp
+        
+    }
+  return numberArray
+  console.log(numberArray)
+ }
+
+ arrayShuffle()
+ console.log(numberArray)
+
+
+
+//create the boxes
+ function createBox(){
+
+    for (var nCtr1 = 0; nCtr1 <= 2; nCtr1++) {
+    	
+    	 for (var nCtr2 = 0; nCtr2 <= 2; nCtr2++) {
+
+        boxes = document.createElement('div')
+    	boxes.innerHTML="      A       "
+    	boxes.style.backgoundColor='red'
+    	boxes.classList.add('box')
+      	document.body.appendChild(boxes)
+    	
+    	BoxArray.push(boxes)
+        BoxArray[nCtr2].classList.add(numberArray[nCtr1])   
+        
+        
+
+           }//endfor
+        
+         BoxArray[nCtr2].classList.add(numberArray[nCtr1])
+         document.write('<br></br>')
+    }//end for
+    console.log(BoxArray)
+
+}//end func
+
+
+createBox()
+
+/*
+function setShuffled(){
+    
+
+     for (var nCtr1 = 0; nCtr1 <= BoxArray.length; nCtr1++) {
+    
+      for (var nCtr2 = 0; nCtr2 <= BoxArray.length; nCtr2++) {   
+     
+      BoxArray[nCtr1][].classList.add(numberArray[nCtr1])
+      console.log(BoxArray[nCtr1])
+ 
+     }
+     }
+
+}
+setShuffled()
+
+
+BoxArray[nCtr1].classList.contains(1)
+
+function setName(){
+  
+  for (var i = 0; i < BoxArray.length; i++) {
+      
+
+      if(BoxArray[i].classList.contains(1)) {
+      	BoxArray[i].innerHTML='B'
+      } 	
+
+
+  	  }
+
+}
+setName()
+*/
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

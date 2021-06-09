@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Collect</title>
+    <style>
+    button {
+      width: 50px;
+      margin: 5px;
+      font-size: 30px;
+      padding: 0;
+    }
+    .myform {
+      width: 200px;
+      margin: 1px;
+    }
+    </style>
+    <script>
+
+      //global vars
+
+    var mul = 1
+    var thingONright = document.getElementById('right')
+    var subst = parseInt(thingONright.options[0].text);
+
+
+    function movecenter() {
+      var left = document.getElementById("left");
+      var center = document.getElementById("center");
+      if (left.selectedIndex >= 0) {
+        var option = document.createElement("option");
+        option.text = left.options[left.selectedIndex].text;
+        center.add(option);
+        left.remove(left.selectedIndex);
+      }
+      updateSum();
+    }
+
+    function moveLeft() {
+      var left = document.getElementById("left");
+      var center = document.getElementById("center");
+      if (center.selectedIndex >= 0) {
+        var option = document.createElement("option");
+        option.text = center.options[center.selectedIndex].text;
+        left.add(option);
+        center.remove(center.selectedIndex);
+      }
+      updateSum();
+    }
+
+    
+    function updateSum() {
+      var center = document.getElementById("center");
+      var sum = document.getElementById("sum");
+      var n = 0;
+      for (var option of center.options) {
+        n += parseInt(option.text);
+      }
+      sum.innerHTML = "Current sum: " + n.toString();
+
+      if (n == 733) {
+        window.alert("You did it!");
+      }
+    }
+
+
+
+        function moveright(){
+         
+         var numberArray =[]
+         console.log(numberArray)
+         var thingONcenter = document.getElementById('center') 
+         var thingONright = document.getElementById('right')
+     
+         if(thingONcenter.selectedIndex >= 0){
+         console.log(thingONcenter.selectedIndex)
+         var get_text=thingONcenter[thingONcenter.selectedIndex].text        
+         console.log(get_text)
+        
+         var optionThingcenter = thingONcenter[thingONcenter.selectedIndex]
+
+         var optionThingRight = thingONright[thingONcenter.selectedIndex]
+         optionThingRight.text = get_text
+        
+         numberArray.push(get_text)
+          
+         console.log(numberArray) 
+            compute_numbers(numberArray)
+        optionThingcenter.text = "" 
+        console.log(optionThingRight)
+     }
+   } 
+          
+
+         function MoveCenter(){
+         
+         var thingONcenter = document.getElementById('center') 
+         var thingONright = document.getElementById('right')
+     
+         if(thingONright.selectedIndex >= 0){
+         console.log(thingONright.selectedIndex)
+         var get_text=thingONright[thingONright.selectedIndex].text        
+         console.log(get_text)
+        
+         var optionThingRight = thingONright[thingONright.selectedIndex]
+
+         var optionThingcenter = thingONcenter[thingONright.selectedIndex]
+         optionThingcenter.text = get_text
+         optionThingRight.text = "" 
+         console.log(optionThingcenter)
+      
+        
+     }
+
+    }
+     
+      function compute_numbers(thisNumber){
+             
+                
+              var mult = document.getElementById('forsum')  
+              thisNumber= parseInt(thisNumber)
+              mul *= thisNumber
+
+          console.log(sum)
+            
+            mult.innerHTML= + mul
+
+    }
+
+    function subtract_numbers(thisNumber){
+             
+                
+              var sub = document.getElementById('forsub')  
+              thisNumber= parseInt(thisNumber)
+              subst -= thisNumber
+              
+                      
+               sub.innerHTML= + subst
+
+    }
+
+
+
+   
+
+    </script>
+  </head>
+
+  <body>
+      <table>
+        <tr>
+          <td>
+            <select id="left" size="10" class="myform"></select>
+          </td>
+          <td>
+            <div><button onclick="movecenter()">&#8680;</button></div>
+            <div><button onclick="moveLeft()">&#8678;</button></div>
+          </td>
+          <td>
+            <select id="center" size="10" class="myform"></select>
+          </td>
+          <td>
+            <div><button onclick="moveright()">&#8680;</button></div>
+            <div><button onclick="MoveCenter()">&#8678;</button></div>
+          </td>
+          <td>
+            <select id="right" size="10" class="myform">
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+              <option></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Collect: 733</td>
+          <td>
+            
+          </td>
+          <td id="sum">Current sum: 0</td>
+        </tr>
+      </table>
+  
+    <div id="forsum" style="background-color: red">Multiplication is:</div>
+    <div id="forsub" style="background-color: blue">Subtraction is:</div>
+  </body>
+
+  <script>
+  var left = document.getElementById("left");
+  for (var i = 0; i < 10; i++) {
+    var option = document.createElement("option");
+    option.text = Math.pow(2, i).toString();
+    left.add(option);
+  }
+ 
+  </script>
+</html>

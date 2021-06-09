@@ -1,0 +1,119 @@
+body{
+	background-color: #f4f4f4;		
+    font:normal 11px Audiowide,sans-serif;
+    line-height:1.6em; 
+    
+}
+.one{/*block-type element*/
+        
+	    text-align: center;
+	
+    	color:yellow;
+	    background-color: #333;
+	
+        border:none;
+    
+    	/*opacity: 0.7;*/
+        font:normal 16px "Audiowide",serif;
+        font-weight: 8px;
+		text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px white;
+ 
+        line-height:1.6em;
+        margin: 20px, 0; 
+        padding: 15px;
+
+}
+.menubar{
+	margin: 10px;
+    
+}
+a{
+ 
+	text-decoration: none;
+	background-color: #333; 
+	/*word-spacing: 1.3em;*/
+	color:yellow;
+	font-weight: 5px;
+    font-style: italic; 
+	font-size: 1.6em;
+    margin: 10px;
+    display: block;
+    width:25%;
+    padding: 16px 16px;
+    text-align: center;
+    }
+
+a:hover{
+	color: black;
+    background-color:orange;  
+}
+a:visited{
+    color: blue;
+}
+#title{
+	text-align: center;
+	font-family:Audiowide,sans-serif;
+    text-transform: uppercase;
+	font-style: bold;
+	font-size :1.6em;
+    color: black;
+    text-decoration: underline;
+}
+.box1{
+ 
+    background-color: orange;
+	border-radius: 0.6em;
+    border:0px black solid;
+    margin-bottom: 5px;
+    margin-top:20px;
+    padding:16px; 
+    text-decoration: none;
+	/*opacity: 0.7;*/
+}
+
+p{
+	color: white;
+    font-family: Lora,sans-serif;
+    font-size: 1.2em;
+    margin: 18px;
+}
+
+#par{
+	background-color: black;
+	color:yellow;
+    float: right;
+}
+#image{
+	display: block;
+	margin-left:auto;
+	margin-right:auto; 
+}
+
+#table{
+	font-family: Audiowide, sans-serif;
+	font-size:1.4em;
+    background-image: url(https://www.xtrafondos.com/wallpapers/vertical/baby-yoda-en-el-mandaloriano-4405.jpg);
+    margin: 10px;
+    color: yellow;
+    overflow: scroll;
+
+}
+#newmenu{
+
+    list-style: none;
+    margin:10px;
+    text-decoration: none;
+    font-family: Acme, sans-serif;
+    width:30%;
+    text-transform: uppercase;
+}
+.fix-me{
+    position: fixed;
+    top:400px;
+    width:10%;
+}
+#fe{
+    color: red;
+}

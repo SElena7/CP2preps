@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Draw</title>
+<meta charset="UTF-8">
+<style>
+#canvas {
+display: inline-block;
+box-sizing: border-box;
+border: 1px solid black;
+}
+#stickers {
+display: inline-block;
+width: 50px;
+height: 50px;
+}
+.sticker {
+display: inline-block;
+box-sizing: border-box;
+width: 50px;
+margin: 2px;
+}
+.color {
+display: inline-block;
+box-sizing: border-box;
+width: 48px;
+height: 30px;
+border: 1px solid black;
+margin: 2px 1px 0px 1px;
+}
+</style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600" ondrop="Drop(event)" ondragover="DragOver(event)"></canvas>
+<div id="stickers">
+<img  id="picture1" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487831.png">
+<img id="picture2" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487787.png">
+<img  id="picture3" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487743.png">
+<img id="picture4" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487741.png">
+<img id="picture5" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487815.png">
+<img id="picture6" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/402767.png">
+<img id="picture7" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/363964.gif">
+<img id="picture8" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487785.png">
+<img id="picture9" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/data_images/487810.jpg">
+<img id="picture10" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/image_gallery/464509.png">
+<img id="picture11" class="sticker" dragable="true" ondragstart="StartDrag(event)" src="http://clipart-library.com/image_gallery/464541.jpg">
+<img id="picture12" class="sticker" src="er.png" onclick="erase()">
+
+</div>
+<div>
+<script>
+var colorNames = ["black", "gray", "silver", "white", "maroon", "red", "olive", "yellow", "green",
+"lime", "teal", "aqua", "navy", "blue", "purple", "fuchsia"];
+for (var i = 0; i < 16; i++) {
+document.write(`<div id="${i}" class="color" style="background-color:
+${colorNames[i]}"  onclick="getColor(this)"></div>`);
+}
+
+
+var canvas = document.getElementById('canvas')
+//variables
+canvas.height
+canvas.width
+var painting = false
+var ctx=canvas.getContext('2d')
+var palete=colorNames
+var i
+
+
+function startPosition(){
+	painting = true
+}
+
+function endPosition(){
+	painting = false
+}
+
+function getColor(mycolor){
+	console.log(mycolor)
+	i = mycolor.id;
+	console.log(i)    
+}
+
+//eraser
+function erase(){
+  i=3
+  ctx.lineWidth = 100
+  draw()
+  }
+function draw(e){
+    //chosenColorName
+     
+    var colorx=colorNames[i]
+    
+    console.log(colorx)
+
+
+	if(!painting)return
+	
+	ctx.lineWidth = 10
+	ctx.lineCap = 'round'
+    ctx.strokeStyle=colorx
+	
+	ctx.lineTo(e.clientX, e.clientY)
+	ctx.stroke()
+	ctx.beginPath()
+	ctx.moveTo(e.clientX, e.clientY)
+}
+
+canvas.addEventListener('mousedown',startPosition)
+canvas.addEventListener('mouseup',endPosition)
+canvas.addEventListener('mousemove', draw)
+
+
+ function DragOver(ev) {
+    // the elements can't ususaly be dropped into other elements so we are perventing the usual dealing with the element
+  ev.preventDefault();
+}
+
+function StartDrag(ev) {
+
+  ev.dataTransfer.setData("text", ev.target.id);
+  // we get the id of the picture aka draggable element
+}
+
+function Drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  console.log(data)
+  var slika=document.getElementById(data);
+  console.log(slika)
+  
+  ctx.drawImage(slika, ev.clientX-canvas.offsetLeft, ev.clientY - canvas.offsetTop, 80, 80);
+  // distance from the top and left// size of picture
+}
+
+
+
+</script>
+</div>
+</body></html>

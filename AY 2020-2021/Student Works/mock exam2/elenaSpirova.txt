@@ -1,0 +1,288 @@
+            ;TickTackToe ---> Elena Spirova 
+
+JMP main
+JMP isr
+
+
+TickTackToe:
+DB "\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0\x00\x00\x00\x00\xC0"
+DB "\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0\xC0"
+;*********************************************************************
+;Register A is in charge of I/O int
+;Register B is in charge of carrying the current state which could be 4(keyboard) or 0(idle)
+;in pressed_key wesave the keyboard input that we caused 
+
+isr:
+    PUSH A                            
+    IN 1                
+    AND A, 1            
+    CMP A, 1            
+    JNE isrexit          
+    IN 6                
+    SUB A, 0x30         
+    MOVB [pressed_key], AL     
+    MOV A, 1           
+    OUT 2
+isrexit:               
+    POP A               
+    IRET                
+    
+;**********************************************************************    
+;function check_state->1.calls draw_image
+;                    ->2.calls  which_key
+counter: DB 0
+check_state:
+    MOVB  BH, [counter]	
+    CALL draw_image
+    loop:
+    CALL which_key           
+    JMP loop
+   
+;***********************************************************************
+;function=which_key-> 
+;checks through all of the possible keyboard inputs (1-9)
+;1.check for match
+;2.check if already colored [done1]!=0
+;3.get pixel location acordingly [sqr1...9]
+;loop
+
+
+which_key:
+    MOVB AL, [pressed_key]   
+    MOVB DH, [counter]
+    CMPB  DH, 9
+    JAE stop
+n1:
+    CMPB AL, 7                
+    JNE n2                   
+    MOVB AH, [done1]
+    CMPB AH, 0                 
+    JNE n2                  
+    INCB AH                  
+    MOVB [done1], AH   
+    MOV C, [sqr1]             
+    CALL paint               
+    CALL keyfinish                       
+n2:
+    CMPB AL, 8                
+    JNE n3                   
+    MOVB AH, [done2]
+    CMPB AH, 0               
+    JNE n3                  
+    INCB AH                   
+    MOVB [done2], AH   
+    MOV C, [sqr2]
+    CALL paint               
+    CALL keyfinish                        
+n3:
+    CMPB AL, 9               
+    JNE n4                   
+    MOVB AH, [done3]
+    CMPB AH, 0               
+    JNE n4                  
+    INCB AH                   
+    MOVB [done3], AH   
+    MOV C, [sqr3]
+    CALL paint               
+    CALL keyfinish                        
+n4:
+    CMPB AL, 4                
+    JNE n5                   
+    MOVB AH, [done4]
+    CMPB AH, 0               
+    JNE n5                  
+    INCB AH                   
+    MOVB [done4], AH   
+    MOV C, [sqr4]
+    CALL paint               
+    CALL keyfinish                        
+n5:
+    CMPB AL, 5                
+    JNE n6                   
+    MOVB AH, [done5]
+    CMPB AH, 0               
+    JNE n6                  
+    INCB AH                  
+    MOVB [done5], AH   
+    MOV C, [sqr5]
+    CALL paint               
+    CALL keyfinish            
+n6:
+    CMPB AL, 6                
+    JNE n7                   
+    MOVB AH, [done6]
+    CMPB AH, 0              
+    JNE n7                  
+    INCB AH                  
+    MOVB [done6], AH   
+    MOV C, [sqr6]
+    CALL paint               
+    CALL keyfinish                        
+n7:
+    CMPB AL, 1                
+    JNE n8                   
+    MOVB AH, [done7]
+    CMPB AH, 0               
+    JNE n8                  
+    INCB AH                  
+    MOVB [done7], AH   
+    MOV C, [sqr7]
+    CALL paint               
+    CALL keyfinish            
+n8:
+    CMPB AL, 2                
+    JNE n9                   
+    MOVB AH, [done8]
+    CMPB AH, 0               
+    JNE n9                  
+    INCB AH                   
+    MOVB [done8], AH   
+    MOV C, [sqr8]
+    CALL paint               
+    CALL keyfinish                       
+n9:
+    CMPB AL, 3                
+    JNE keyfinish                  
+    MOVB AH, [done9]
+    CMPB AH, 0               
+    JNE keyfinish                  
+    INCB AH                  
+    MOVB [done9], AH   
+    MOV C, [sqr9]
+    CALL paint               
+    CALL keyfinish                        
+keyfinish:
+    RET
+    
+stop:
+    
+	MOV A,0
+    OUT 2
+    
+    CALL forWin
+;**************************************************************************     
+;function paint -> 
+;1.paints the field we decided for in which_key
+;2. 2 - player implementation 
+;3. check if color is different every time
+paint:
+    
+    INCB DH 
+    MOVB [counter], DH
+    MOVB [C], DL        
+    INC C
+    MOVB [C],DL         
+    ADD C,16
+    MOVB [C],DL
+    DEC C
+    MOVB [C],DL
+    CMPB DL, 0xa  ;->blue       
+    JE paint_yellow          
+    MOVB DL, 0xa   	      
+    RET
+
+paint_yellow:
+    MOVB DL, 0xf0 ;->yellow
+    RET 
+;**************************************************************************  
+
+forWin:
+	MOV A,[sqr1]
+    CMP A,[sqr2]
+    JNE skip1
+    CMP A, [sqr3]
+    JNE skip1
+    MOV A, 49
+    MOV B, 0x0ee0
+    MOV [B], A
+    HLT
+    skip1:
+    MOV A, string 
+    str_loop:
+    MOVB CL, [A]
+    MOV B, 0x0ee0
+    CMPB CL, 0
+    JE str_stop
+    MOVB [B], CL
+    INC B 
+    INC A 
+    JMP str_loop
+    str_stop:
+    HLT
+
+;***********************************************************************
+;function draw_image-> draws the game board
+draw_image:
+ 	MOV B, display_start    	
+    MOV A, TickTackToe
+    draw_image_loop:
+    CMP B, display_end      
+	JA draw_image_return
+	MOVB CL, [A]            
+	MOVB [B], CL            
+	INC A                   
+	INC B                   
+	JMP draw_image_loop
+	draw_image_return:
+    
+	RET                     
+;***********************************************************************
+main:
+
+ MOV SP, 0x0EDF	    ; Initialize the stack pointer.
+ MOVB DL, 0xA       ; Player one starts the game with blue
+ MOV A, 1 			; Enable keyboard interrupts
+ OUT 0
+ STI				; Enable global interrupts        
+ JMP check_state
+;***********************************************************************
+						;Global vars 
+
+pressed_key:
+    DB 0   
+
+;0-1 inputs
+done1: DW 0
+done2: DW 0
+done3: DW 0
+done4: DW 0
+done5: DW 0
+done6: DW 0
+done7: DW 0
+done8: DW 0
+done9: DW 0
+
+;addresses we need 
+sqr1: DW 0x0F22    
+sqr2: DW 0x0F27    
+sqr3: DW 0x0F2C    
+sqr4: DW 0x0F72    
+sqr5: DW 0x0F77    
+sqr6: DW 0x0F7C    
+sqr7: DW 0x0FC2    
+sqr8: DW 0x0FC7    
+sqr9: DW 0x0FCC     
+
+;
+string: DB "  Who won?  "
+        DB 0
+        
+; Graphic display constants
+org 0x0F00
+display_start:
+org 0x0fff
+display_end:

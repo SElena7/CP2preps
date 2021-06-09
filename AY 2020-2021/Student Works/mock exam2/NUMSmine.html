@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>numbers</title>
+	<script type="text/javascript">
+		
+
+		function startCounting() {
+	  var table = document.getElementById("myTable");
+      var row = table.insertRow(0);
+      var len = table.rows.length
+      console.log(len)
+
+      var cell1 = row.insertCell(0);
+      var n = cell1.innerHTML
+      n+=1
+      cell1.innerHTML = len;
+      
+}
+	</script>
+
+
+
+
+</head>
+<body>
+	<button onclick="startCounting()">Start</button>
+	<button>Stop</button>
+	<button>Clear</button>
+	<br><br><br><br>
+	<table id= 'myTable'style="border:1px solid black; ">
+		<tr>
+			<th>Numbers</th>
+		</tr>
+		
+
+		<tr> 
+			
+			<td>0</td>
+		</tr>
+	</table>
+</body>
+</html>
